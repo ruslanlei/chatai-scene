@@ -21,7 +21,6 @@ export const Camera: FC = () => {
       friction: 26,
     },
     onChange: ({ value: { position } } ) => {
-      console.log(...position);
       cameraRef.current.lookAt(new Vector3(0, 0, 0));
       cameraRef.current.position.set(...position);
     }
