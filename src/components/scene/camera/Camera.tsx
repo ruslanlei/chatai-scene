@@ -1,4 +1,4 @@
-import {FC, useCallback, useEffect, useRef} from "react";
+import {FC, useCallback, useEffect, useRef, useState} from "react";
 import {useThree} from "react-three-fiber";
 import {OrbitControls, PerspectiveCamera} from "@react-three/drei";
 import { Vector3 } from 'three';
@@ -13,6 +13,11 @@ export const Camera: FC = () => {
     cameraRef.current = camera;
   }, [camera]);
 
+  const [
+    pauseSpring,
+    setPauseSpring
+  ] = useState(false)
+
   const [, set] = useSpring(() => ({
     position: defaultPosition,
     config: {
@@ -23,15 +28,21 @@ export const Camera: FC = () => {
     onChange: ({ value: { position } } ) => {
       cameraRef.current.lookAt(new Vector3(0, 0, 0));
       cameraRef.current.position.set(...position);
-    }
+    },
+    pause: pauseSpring,
   }));
   useEffect(() => {
     camera.lookAt(new Vector3(0, 0, 0));
   }, [camera]);
 
+  const onCameraStart = useCallback(() => {
+    setPauseSpring(true);
+  }, [setPauseSpring])
+
   const onCameraEnd = useCallback(() => {
+    setPauseSpring(false);
     set({ position: defaultPosition, from: { position: camera.position.toArray() } });
-  }, [camera]);
+  }, [camera, setPauseSpring]);
 
   return (
     <>
@@ -42,6 +53,7 @@ export const Camera: FC = () => {
         maxPolarAngle={1.4}
         minAzimuthAngle={-1}
         maxAzimuthAngle={1}
+        onStart={onCameraStart}
         onEnd={onCameraEnd}
       />
       <PerspectiveCamera
