@@ -9,7 +9,8 @@ import {Camera} from "./camera/Camera.tsx";
 const ChatGPTLogo: FC = () => {
   const gltf = useGLTF(chatGptModel);
 
-  const logoMesh = gltf.scene.children[0]
+  const bubbleMesh = gltf.scene.children[0];
+  const logoMesh = gltf.scene.children[1];
 
   const {
     position: scenePosition,
@@ -45,11 +46,8 @@ const ChatGPTLogo: FC = () => {
   return (
     <FloatingAnimation play={true}>
       <a.group position={scenePosition}>
+        <primitive object={bubbleMesh} />
         <a.primitive object={logoMesh} scale={logoScale} rotation={logoRotation} />
-
-        {gltf.scene.children.slice(1).map((child, index) => (
-          <primitive key={index} object={child} />
-        ))}
       </a.group>
     </FloatingAnimation>
   );
