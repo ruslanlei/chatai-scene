@@ -9,8 +9,7 @@ import {Camera} from "./camera/Camera.tsx";
 const ChatGPTLogo: FC = () => {
   const gltf = useGLTF(chatGptModel);
 
-  const bubbleMesh = gltf.scene.children[0];
-  const logoMesh = gltf.scene.children[1];
+  const logoMesh = gltf.scene.children[0];
 
   const {
     position: scenePosition,
@@ -46,7 +45,6 @@ const ChatGPTLogo: FC = () => {
   return (
     <FloatingAnimation play={true}>
       <a.group position={scenePosition}>
-        <primitive object={bubbleMesh} />
         <a.primitive object={logoMesh} scale={logoScale} rotation={logoRotation} />
       </a.group>
     </FloatingAnimation>
@@ -55,7 +53,7 @@ const ChatGPTLogo: FC = () => {
 
 export const Scene: FC = () => {
   return (
-    <Canvas style={{ width: '100vw', height: '100vh' }}>
+    <Canvas gl={{ antialias: true }} style={{ width: '100vw', height: '500px' }}>
       <Camera />
       <pointLight intensity={10} position={[1, 0.5, 1]} />
       <pointLight intensity={5} position={[-1, -1, 1]} />

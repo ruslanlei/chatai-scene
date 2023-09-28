@@ -4,7 +4,7 @@ import {OrbitControls, PerspectiveCamera} from "@react-three/drei";
 import { Vector3 } from 'three';
 import { useSpring } from "@react-spring/three";
 
-const defaultPosition: [number, number, number] = [0, 0, 2];
+const defaultPosition: [number, number, number] = [0, 0, 1.2];
 
 export const Camera: FC = () => {
   const { camera } = useThree();
